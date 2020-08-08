@@ -1,0 +1,320 @@
+
+<!DOCTYPE html>
+<html class="no-js" lang="en"> 
+    <head>
+        <meta charset="utf-8">
+        <title>API - Documentation</title>
+        <meta name="description" content="">
+        <meta name="author" content="ticlekiwi">
+
+        <meta http-equiv="cleartype" content="on">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="css/hightlightjs-dark.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,500|Source+Code+Pro:300" rel="stylesheet">
+        <link rel="stylesheet" href="css/style.css" media="all">
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+
+    <body>
+        <div class="left-menu">
+            <div class="content-logo">
+                <span id = 'title1'>Lokdhaba API Documentation</span>
+            </div>
+            <div class="content-menu">
+                <ul>
+                    <li class="scroll-to-link active" data-target="get-started">
+                        <a>GET STARTED</a>
+                    </li>
+                    <li class="scroll-to-link" data-target="get-characters">
+                        <a>Download Data</a>
+                    </li>
+                    <li class="scroll-to-link" data-target="get-viz">
+                        <a>Access VizData</a>
+                    </li>
+                    
+                    <li class="scroll-to-link" data-target="errors">
+                        <a>Errors</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="content-page scrollbar">
+
+            <div class="content-code"></div>
+            <div class="content ">
+                <div class="overflow-hidden content-section" id="content-get-started">
+                    <h1 id="get-started">Get started</h1>
+                    <pre>
+    API Endpoint
+
+        http://api.lokdhaba.com/
+                </pre>
+                    <p>
+                        The Lokdhaba API provides programmatic access to the lokdhaba-website. Directly download data, while specifying the parameters you need. The API also provides easy access to the rich visualizations served by the website.                    </p>
+                    <p>
+                        The API can be accessed by anyone without an API-key. 
+                    </p>
+                                </div>
+                <div class="overflow-hidden content-section" id="content-get-characters">
+                    <h2 id="get-characters">Download Data</h2>
+                    
+                    <pre><code class=" scrollbar bash ">
+
+# Here is a curl example
+curl -X GET \
+  'http://0.0.0.0:8000/v1/DirectDownload/?ElectionType=GE&StateName=Delhi&AssemblyNo=3' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+
+
+#Here is a python3 example
+    import requests
+
+    url = "http://0.0.0.0:8000/v1/DirectDownload/"
+    querystring = {"ElectionType":"GE","StateName":"Delhi","AssemblyNo":"3"}
+    headers = {
+        'content-type': "application/json",
+        'cache-control': "no-cache",
+        'postman-token': "a75d7004-d35d-d9d7-17ae-9cf9e65fc6ac"
+        }
+
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    print(response.text)
+  
+                </code></pre>
+                    <p>
+                        To download data you need to make a POST call to the following url :<br>
+                        <code class="higlighted">http://api.lokdhaba.com/</code>
+                    </p>
+                    <br>
+                    <pre><code class="scrollbar python3">
+
+        
+
+Result example :
+
+Election_Type,State_Name,Assembly_No,Constituency_No,Year,month,Poll_No,DelimID,Position,Candidate,Sex,Party,Votes,Candidate_Type,Valid_Votes,Electors,Constituency_Name,Constituency_Type,Sub_Region,N_Cand,Turnout_Percentage,Vote_Share_Percentage,Deposit_Lost,Margin,Margin_Percentage,ENOP,pid,Party_Type_TCPD,Party_ID,last_poll,Contested,Last_Party,Last_Party_ID,Last_Constituency_Name,Same_Constituency,Same_Party,No_Terms,Turncoat,Incumbent,Recontest,Age,District_Name
+GE,Delhi,3,1,1962,2,0,1,1,MEHR CHAND KHANNA,M,INC,96264,,169912,268661,NEW DELHI,GEN,,9,63.24,56.66,no,31595,18.59,2.17,GEDL16599,,3482,TRUE,1,,,,,,1,FALSE,FALSE,FALSE,,...
+
+                </code></pre>
+                    <h4>QUERY PARAMETERS</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Datatype</th>
+                            </tr>
+                           </thead>
+                           <tbody>
+                            <tr>
+                                <td>ElectionType</td>
+                                <td>Text</td>
+                                <td> Election type of the query(s)</td>
+                                <td>String</td>
+                            </tr>
+                            <tr>
+                                <td>StateName</td>
+                                <td>Text</td>
+                                <td>State name of the query(s)</td>
+                                <td>String</td>
+                            </tr>
+                            <tr>
+                                <td>AssemblyNo</td>
+                                <td>Number</td>
+                                <td>Assembly number of the query(s).</td>
+                                <td>String</td>
+                            </tr>
+                        <tr>
+
+                        <td>Filters</td>
+                        <td>Number</td>
+                        <td>Filter type  of the query(s).</td>
+                        <td>String</td>
+                      </tr>
+
+                        </tbody>
+                    </table>                    
+                </div>
+
+
+
+
+
+                <div class="overflow-hidden content-section" id="content-get-viz">
+                    <h2 id="get-characters">Get Vizualization Data</h2>
+                    
+                    <pre><code class=" scrollbar bash ">
+
+# Here is a curl example
+curl -X POST \
+  http://0.0.0.0:8000/v1/getVizData/ \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -d '{"ElectionType":"GE","StateName":"Delhi","ModuleName":"winnerGenderMap","VizType":"Map","AssemblyNo":14,"Party":"","Legends":["Male","Female","Others"]}'
+
+
+#Here is a python3 example
+    import requests
+
+    url = "http://0.0.0.0:8000/v1/getVizData/"
+
+    payload = "{\"ElectionType\":\"GE\",\"StateName\":\"Delhi\",\"ModuleName\":\"winnerGenderMap\",\"VizType\":\"Map\",\"AssemblyNo\":14,\"Party\":\"\",\"Legends\":[\"Male\",\"Female\",\"Others\"]}"
+    headers = {
+        'content-type': "application/json",
+        'cache-control': "no-cache",
+        'postman-token': "a5b2b579-fd78-7537-9235-e499a1957d36"
+        }
+
+    response = requests.request("POST", url, data=payload, headers=headers)
+
+    print(response.text)
+  
+                </code></pre>
+                    <p>
+                        To access the visualization data you need to make a POST call to the following url :<br>
+                        <code class="higlighted">http://api.lokdhaba.com/</code>
+                    </p>
+                    <br>
+                    <pre><code class="scrollbar json">
+
+        
+
+Result example :
+{
+    "data": [
+        {
+            "Election_Type": "GE",
+            "State_Name": "Delhi",
+            "Assembly_No": 14,
+            "Year": 2004,
+            "Constituency_No": 1,
+            "Constituency_Name": "NEW DELHI",
+            "Turnout_Percentage": "44.51",
+            "Vote_Share_Percentage": "52.04",
+            "Constituency_Type": "General",
+            "Electors": 455114,
+            "N_Cand": 15,
+            "Position": 1,
+            "Sex": "Male",
+            "Party": "INC",
+            "Votes": 105415,
+            "Candidate": "AJAY MAKAN",
+            "Margin_Percentage": "6.31",
+            "Runner": "JAGMOHAN",
+            "Runner_Party": "BJP",
+            "Runner_Sex": "M",
+            "Nota_Percentage": "0.00"
+        },...
+    ]
+    }
+
+
+                </code></pre>
+                    <h4>QUERY PARAMETERS</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Datatype</th>
+                            </tr>
+                           </thead>
+                           <tbody>
+                            <tr>
+                                <td>ElectionType</td>
+                                <td>Text</td>
+                                <td>The election type of the query(s)</td>
+                                <td>String</td>
+                            </tr>
+                            <tr>
+                                <td>StateName</td>
+                                <td>Text</td>
+                                <td>The state name of the query(s)</td>
+                                <td>String</td>
+                            </tr>
+                            <tr>
+                                <td>AssemblyNo</td>
+                                <td>Number</td>
+                                <td>Assembly number of the query(s).</td>
+                                <td>String</td>
+                            </tr>
+
+                        <tr>
+
+                        <td>ModuleName</td>
+                        <td>Text</td>
+                        <td>Name of vizualization module</td>
+                        <td>String</td>
+                      </tr>
+
+                      <tr>
+
+                        <td>VizType</td>
+                        <td>Text</td>
+                        <td>Type of visualization </td>
+                        <td>String</td>
+                      </tr>
+
+                      <tr>
+
+                        <td>Party</td>
+                        <td>Text</td>
+                        <td>The party names which are required</td>
+                        <td>String</td>
+                      </tr>
+
+                      <tr>
+
+                        <td>Filters</td>
+                        <td>Number</td>
+                        <td>Filter type of the query(s).</td>
+                        <td>String</td>
+                      </tr>
+                      
+
+                        </tbody>
+                    </table>                    
+                </div>
+
+
+
+
+
+
+                <div class="overflow-hidden content-section" id="content-errors">
+                    <h2 id="errors">Errors</h2>
+                    <p>
+                        The Lokdhaba API uses the following error codes:
+                    </p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Error Code</th>
+                                <th>Meaning</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>X000</td>
+                                <td>
+                                    Some parameters are missing. This error appears when you don't pass every mandatory parameters.
+                                </td>
+                            </tr>
+                      
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="content-code"></div>
+        </div>
+
+        <script src="js/libs/jquery.js"></script>
+        <script src="js/script.js"></script>
+    </body>
+</html>
